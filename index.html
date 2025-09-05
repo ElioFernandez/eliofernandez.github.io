@@ -160,8 +160,8 @@
             </ul>
         </div>
         
-        <a href="javascript:history.back()" class="back-button">
-            ← Volver Atrás
+        <a id="openAppButton" class="back-button">
+            📲 Ir a la App
         </a>
         
         <div class="info-box">
@@ -182,6 +182,32 @@
                     Este sitio web (<strong>${decodeURIComponent(blockedUrl)}</strong>) no está disponible según la configuración de control parental. 
                     Solo puedes acceder a los sitios que están en la lista de sitios permitidos.
                 `;
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const blockedDomain = urlParams.get('blocked'); 
+        
+            // Actualizar texto descriptivo
+            if (blockedDomain) {
+                const description = document.querySelector('.description');
+                description.innerHTML = `
+                    Este sitio web (<strong>${decodeURIComponent(blockedDomain)}</strong>) no está disponible según la configuración de control parental. 
+                    Solo puedes acceder a los sitios que están en la lista de sitios permitidos.
+                `;
+            }
+
+            // Configurar el botón de "Ir a la App" para que abra el universal link
+            const openAppButton = document.getElementById('openAppButton');
+            const universalLinkBase = "https://shift-volumes-courage-treated.trycloudflare.com/remediation";
+
+            if (blockedDomain) {
+                openAppButton.href = `${universalLinkBase}?blocked=${encodeURIComponent(blockedDomain)}`;
+            } else {
+                openAppButton.href = universalLinkBase;
             }
         });
     </script>
