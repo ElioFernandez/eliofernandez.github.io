@@ -174,40 +174,19 @@
         // Mostrar la URL bloqueada si está disponible
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
-            const blockedUrl = urlParams.get('url');
+            const domain = urlParams.get('domain');
             
-            if (blockedUrl) {
+            if (domain) {
                 const description = document.querySelector('.description');
                 description.innerHTML = `
-                    Este sitio web (<strong>${decodeURIComponent(blockedUrl)}</strong>) no está disponible según la configuración de control parental. 
+                    Este sitio web (<strong>${decodeURIComponent(domain)}</strong>) no está disponible según la configuración de control parental. 
                     Solo puedes acceder a los sitios que están en la lista de sitios permitidos.
                 `;
-            }
-        });
-    </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const blockedDomain = urlParams.get('blocked'); 
-        
-            // Actualizar texto descriptivo
-            if (blockedDomain) {
-                const description = document.querySelector('.description');
-                description.innerHTML = `
-                    Este sitio web (<strong>${decodeURIComponent(blockedDomain)}</strong>) no está disponible según la configuración de control parental. 
-                    Solo puedes acceder a los sitios que están en la lista de sitios permitidos.
-                `;
-            }
+                const universalLink = 
+                    `https://shift-volumes-courage-treated.trycloudflare.com/remediation?blocked=${encodeURIComponent(domain)}`;
 
-            // Configurar el botón de "Ir a la App" para que abra el universal link
-            const openAppButton = document.getElementById('openAppButton');
-            const universalLinkBase = "https://shift-volumes-courage-treated.trycloudflare.com/remediation";
-
-            if (blockedDomain) {
-                openAppButton.href = `${universalLinkBase}?blocked=${encodeURIComponent(blockedDomain)}`;
-            } else {
-                openAppButton.href = universalLinkBase;
+                document.getElementById('openAppButton').href = universalLink;
             }
         });
     </script>
